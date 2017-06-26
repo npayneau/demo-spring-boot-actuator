@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+					  http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<artifactId>core</artifactId>
+	<packaging>${packaging.type}</packaging>
+	
+	<name>core</name>
+			
+	<parent>
+		<groupId>org.example.nicop.spring.boot</groupId>
+		<artifactId>demo_actuator</artifactId>
+		<version>0.1.0-SNAPSHOT</version>
+		<relativePath>..</relativePath>
+	</parent>
+	
+	<dependencies>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			
+	    </dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+			<version>1.5.3.RELEASE</version>
+	    </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jolokia</groupId>
+            <artifactId>jolokia-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-starter-client</artifactId>
+            <version>1.5.0</version>
+        </dependency>
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+		</dependency>
+
+         
+	     <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+         </dependency>
+
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>fluent-hc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-commons</artifactId>
+        </dependency>
+
+
+
+	</dependencies>
+
+    
+	    
+          <profiles>
+                <profile>
+                    <!-- profil production.
+                    Activé par défaut.
+                    -->
+                    <id>production</id>
+                    <activation>
+                        <activeByDefault>true</activeByDefault>
+                    </activation>
+                    <properties>
+                        <packaging.type>jar</packaging.type>
+                    </properties>
+                    <build>
+                        <finalName>${project.name}</finalName>
+                        <plugins>
+                            <plugin>
+                                <groupId>org.springframework.boot</groupId>
+                                <artifactId>spring-boot-maven-plugin</artifactId>
+                                <version>1.5.3.RELEASE</version>
+                                <executions>
+                                    <execution>
+                                        <goals>
+                                            <goal>repackage</goal>
+                                        </goals>
+                                    </execution>
+                                </executions>
+                            </plugin>
+                        </plugins>
+                    </build>
+                </profile>
+
+                <profile>
+                    <!-- profil development.
+                    Ce profil facilite le dévelopement en assurant le lancement de l'application en standalone, indépendamment
+                    du packaging de production (qui peut être un WAR).
+                    Permet de tirer parti du restart avec devtools.
+                    Doit être spécifié avec la variable environnement ENV_DEV
+                    par exemple :
+                    set ENV_DEV
+                    mvn sprint-boot:run
+                    -->
+                    <id>development</id>
+                    <activation>
+                        <property>
+                            <name>env.ENV_DEV</name>
+                        </property>
+                    </activation>
+
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.springframework.boot</groupId>
+                            <artifactId>spring-boot-devtools</artifactId>
+                            <optional>true</optional>
+                        </dependency>
+                    </dependencies>
+
+                    <properties>
+                        <packaging.type>jar</packaging.type>
+                    </properties>
+
+                    <build>
+                        <finalName>${project.name}</finalName>
+                        <plugins>
+                            <plugin>
+                                <groupId>org.springframework.boot</groupId>
+                                <artifactId>spring-boot-maven-plugin</artifactId>
+                                <version>1.5.3.RELEASE</version>
+                                <executions>
+                                    <execution>
+                                        <goals>
+                                            <goal>repackage</goal>
+                                        </goals>
+                                    </execution>
+                                </executions>
+                            </plugin>
+                        </plugins>
+                    </build>
+
+                </profile>
+            </profiles>
+
+         
+	
+</project>

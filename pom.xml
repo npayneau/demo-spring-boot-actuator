@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+		
+	<groupId>org.example.nicop.spring.boot</groupId>
+	<artifactId>demo_actuator</artifactId>
+	<packaging>pom</packaging>
+	<version>0.1.0-SNAPSHOT</version>
+	
+	<name>demo-actuator</name>
+	
+	<modules>
+		
+		<module>core</module>
+		
+	</modules>
+
+	<properties>
+		<scmRepositoryUri>your repot</scmRepositoryUri> <!-- A renseigner -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+		<scm-plugin-version>1.9.5</scm-plugin-version>
+		<jacoco-plugin-version>0.7.9</jacoco-plugin-version>
+		<maven-release-plugin-version>2.5.3</maven-release-plugin-version>
+		<maven-compile-plugin-version>3.6.1</maven-compile-plugin-version>
+		<dependency-check-plugin-version>1.4.5</dependency-check-plugin-version>
+		<springBootVersion>1.5.3.RELEASE</springBootVersion>
+		<http-components-version>4.5.3</http-components-version>
+		<servlet-api-version>3.1.0</servlet-api-version>
+		<lombok-version>1.16.16</lombok-version>
+		<postgresql-version>42.0.0</postgresql-version>
+	</properties>
+	
+ 	<scm>
+		<url>${scmRepositoryUri}</url>
+		<connection>scm:git:${scmRepositoryUri}</connection>
+		<developerConnection>scm:git:${scmRepositoryUri}</developerConnection>
+	</scm>
+	
+	
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<!-- Import dependency management from Spring Boot -->
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>${springBootVersion}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok</artifactId>
+				<version>${lombok-version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+          <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>${servlet-api-version}</version>
+            <scope>provided</scope>
+           </dependency>
+
+          <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>fluent-hc</artifactId>
+            <version>${http-components-version}</version>
+          </dependency>
+
+
+		</dependencies>
+	</dependencyManagement>
+	
+	
+	<build>
+		<plugins>
+			<!-- Source Code Management GIT provider -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-scm-plugin</artifactId>
+				<version>${scm-plugin-version}</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.maven.scm</groupId>
+						<artifactId>maven-scm-provider-gitexe</artifactId>
+						<version>${scm-plugin-version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.maven.scm</groupId>
+						<artifactId>maven-scm-api</artifactId>
+						<version>${scm-plugin-version}</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+			<!-- Release plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>${maven-release-plugin-version}</version>
+				<configuration>
+					<goals>javadoc:jar deploy</goals>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.maven.scm</groupId>
+						<artifactId>maven-scm-provider-gitexe</artifactId>
+						<version>${scm-plugin-version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.maven.scm</groupId>
+						<artifactId>maven-scm-api</artifactId>
+						<version>${scm-plugin-version}</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+			<!-- Coverage plugin (SonarQube requirement) -->
+			<plugin>
+			  <groupId>org.jacoco</groupId>
+			  <artifactId>jacoco-maven-plugin</artifactId>
+			  <version>${jacoco-plugin-version}</version>
+			  <executions>
+			    <execution>
+			      <id>prepare-unit-tests</id>
+			      <goals>
+			        <goal>prepare-agent</goal>
+			      </goals>
+			    </execution>
+			  </executions>
+			</plugin>
+		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${maven-compile-plugin-version}</version>
+					<configuration>
+						<source>1.8</source>
+						<target>1.8</target>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+	
+</project>

@@ -1,0 +1,28 @@
+logging:
+  level:
+    ROOT: INFO
+    org:
+      springframework:
+        web: INFO
+      hibernate: ERROR
+  file: logs/application.log
+  pattern:
+    console: '%-5level %d{yyyy-MM-dd HH:mm:ss.SSS} %t %c{1} - %msg%n'
+    file: '%-5level %d{yyyy-MM-dd HH:mm:ss.SSS} %t %c{1} - %msg%n'
+spring:
+  profiles:
+    active: DEVELOPMENT
+  boot:
+    admin:
+      client:
+        management-url: http://localhost:8181/manage
+      url: http://localhost:8080
+server:
+  port: 8180
+endpoints:
+  sensitive: true
+management:
+  context-path: /manage
+  port: 8181
+  security:
+    enabled: false
